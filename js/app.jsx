@@ -5,9 +5,10 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
-import { checkForMissingPlugins } from '@mapstore/utils/DebugUtils';
+ import { checkForMissingPlugins } from '@mapstore/utils/DebugUtils';
 import main from '@mapstore/product/main';
+import MapViewer from "@mapstore/product/pages/MapViewer";
+
 const ConfigUtils = require('@mapstore/utils/ConfigUtils').default;
 /**
  * Add custom (overriding) translations with:
@@ -29,18 +30,36 @@ ConfigUtils.setLocalConfigurationFile('localConfig.json');
  *
  * const appConfig = require('./appConfig');
  *
- * Or override the application configuration file with (e.g. only one page with a mapviewer) - in this case the map loaded will be `config.json` in the root of the app:
+ * Or override the application configuration file with (e.g. only one page with a mapviewer):
  *
- * const appConfig = {
- *     ...require('@mapstore/product/appConfig').default,
+ * const appConfig = assign({}, require('@mapstore/product/appConfig'), {
  *     pages: [{
  *         name: "mapviewer",
  *         path: "/",
- *         component: require('@mapstore/product/pages/MapViewer').default
+ *         component: require('@mapstore/product/pages/MapViewer')
  *     }]
- * };
+ * });
  */
-const appConfig = require('@mapstore/product/appConfig').default;
+//const appConfig = require('@mapstore/product/appConfig').default;
+
+const cfg = require('@mapstore/product/appConfig').default;
+
+const appConfig = {
+    ...cfg,
+    pages: [
+        {
+            name: "mapviewer",
+            path: "/",
+            component: MapViewer
+        },
+        {
+            name: "mapviewer",
+            path: "/viewer/:mapType/:mapId",
+            component: MapViewer
+        }
+    ],
+    appEpics: {}
+};
 
 /**
  * Define a custom list of plugins with:
