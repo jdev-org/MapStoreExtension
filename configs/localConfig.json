@@ -21,13 +21,6 @@
     "useAuthenticationRules": true,
     "loadAfterTheme": true,
     "defaultMapOptions": {
-      "cesium": {
-          "flyTo": true,
-          "navigationTools": true,
-          "terrainProvider": {
-              "type": "ellipsoid"
-          }
-      },
       "floatingIdentifyDelay": 1000
     },
     "localizedLayerStyles": {
@@ -269,7 +262,7 @@
                     }
                 }
             }, "Login",
-            "OmniBar", "BurgerMenu", "Expander", "GlobeViewSwitcher", {
+            "OmniBar", "BurgerMenu", "Expander", {
               "name": "Cookie",
               "cfg": {
                 "externalCookieUrl" : "",
@@ -278,7 +271,202 @@
             },
             "FeedbackMask"
         ],
-        "desktop": ["Details", "SampleExtension",
+        "desktop": ["Details",
+        {
+          "name": "Tabou2",
+          "cfg": {
+            "styles": {
+              "showClick": true,
+              "selection": {
+                "fillColor": "red",
+                "fillOpacity": 0.5,
+                "opacity": 1,
+                "color": "yellow",
+                "weight": 2
+              },
+              "default": {
+                "fillColor": "#6f718e",
+                "fillOpacity": 0,
+                "opacity": 0.8,
+                "color": "yellow",
+                "weight": 2,
+                "dashArray": [
+                  5,
+                  5
+                ]
+              }
+            },
+            "geoserverURL": "https://gis.jdev.fr/geoserver",
+            "layersOrder": [
+              "Opérations",
+              "Secteurs",
+              "Programmes"
+            ],
+            "help": {
+              "url": "https://public.sig.rennesmetropole.fr/ressources/app/georchestra/Portail%20web%20guide%20rapide%20de%20prise%20en%20main.pdf",
+              "contact": "d.cottencin@rennesmetropole.fr",
+              "ads": "https://public.sig.rennesmetropole.fr/ressources/app/georchestra/Portail%20web%20guide%20rapide%20de%20prise%20en%20main.pdf#15",
+              "ddc": "https://public.sig.rennesmetropole.fr/ressources/app/georchestra/Portail%20web%20guide%20rapide%20de%20prise%20en%20main.pdf"
+            },
+            "layersCfg": {
+              "layerPA": {
+                "nom": "tabou:tabou_v_oa_programme",
+                "geomField": "the_geom",
+                "idField": "objectid",
+                "idType": "number"
+              },
+              "layerOA": {
+                "nom": "tabou:tabou_v_oa_operation",
+                "geomField": "the_geom",
+                "idField": "objectid",
+                "idType": "number"
+              },
+              "layerSA": {
+                "nom": "tabou:tabou_v_oa_secteur",
+                "geomField": "the_geom",
+                "idField": "objectid",
+                "idType": "number"
+              }
+            },
+            "searchCfg": {
+              "limit": 100000,
+              "communes": {
+                "layer": "tabou2:commune_emprise",
+                "geom": "the_geom",
+                "placeholder": "Communes",
+                "filterField": "code_insee",
+                "apiField": "codeInsee",
+                "apiLabel": "nom"
+              },
+              "quartiers": {
+                "layer": "tabou2:quartier",
+                "geom": "the_geom",
+                "placeholder": "Quartiers",
+                "filterField": "nuquart",
+                "apiField": "nuQuart",
+                "apiLabel": "nom"
+              },
+              "iris": {
+                "layer": "tabou2:iris",
+                "geom": "the_geom",
+                "placeholder": "Iris",
+                "filterField": "code_iris",
+                "apiField": "codeIris",
+                "apiLabel": "nmiris"
+              },
+              "etapesoa": {
+                "layer": "tabou:tabou_v_oa_operation",
+                "geom": "the_geom",
+                "filterField": "etape",
+                "placeholder": "Etapes OA",
+                "apiField": "libelle",
+                "apiLabel": "libelle"
+              },
+              "etapespa": {
+                "layer": "tabou:tabou_v_oa_programme",
+                "geom": "the_geom",
+                "filterField": "etape",
+                "apiLabel": "libelle",
+                "apiField": "libelle",
+                "type": "string",
+                "placeholder": "Etapes PA"
+              },
+              "secteurs-sam": {
+                "layer": "tabou2:v_chargedoperation_secteur",
+                "geom": "the_geom",
+                "filterField": "nom_secteu",
+                "apiLabel": "nomSecteur",
+                "apiField": "nomSecteur",
+                "placeholder": "Sec. SAM"
+              },
+              "secteurs-speu": {
+                "layer": "tabou2:v_referent_urbaniste_secteur",
+                "geom": "the_geom",
+                "filterField": "nom_secteu",
+                "apiLabel": "nomSecteur",
+                "apiField": "nomSecteur",
+                "placeholder": "Sec. SPEU"
+              },
+              "secteurs-sds": {
+                "layer": "tabou2:v_instructeur_secteur",
+                "geom": "the_geom",
+                "filterField": "secteur",
+                "apiField": "secteur",
+                "apiLabel": "secteur",
+                "placeholder": "Sec. SDS"
+              },
+              "secteurs-foncier": {
+                "layer": "tabou2:v_negociateurfoncier_secteur",
+                "geom": "the_geom",
+                "filterField": "negociateu",
+                "apiField": "negociateur",
+                "apiLabel": "negociateur",
+                "placeholder": "Sec. Foncier"
+              },
+              "natures": {
+                "layer": "tabou:tabou_v_oa_operation",
+                "geom": "the_geom",
+                "service": "operations?nature",
+                "attribute": "layerOA",
+                "spatial": [
+                  "layerPA",
+                  "layerSA"
+                ],
+                "filterField": "nature",
+                "apiField": "libelle",
+                "apiLabel": "libelle",
+                "placeholder": "Natures"
+              },
+              "amenageurOA": {},
+              "promoteurOA": {},
+              "types-financements": {
+                "filterField": "code",
+                "apiField": "code",
+                "apiLabel": "libelle",
+                "placeholder": "Type de financement"
+              },
+              "plui": {
+                "layer": "tabou2:plui_plan_zonage_simplifie",
+                "geom": "the_geom",
+                "filterField": "etiquette",
+                "apiField": "libelle",
+                "apiLabel": "libelle",
+                "placeholder": "Zonage PLUI"
+              },
+              "daact": {
+                "layer": "tabou:tabou_v_oa_programme",
+                "geom": "the_geom",
+                "filterField": "daact_date",
+                "type": "date",
+                "placeholder": "Choisir une date"
+              },
+              "doc": {
+                "layer": "tabou:tabou_v_oa_programme",
+                "geom": "the_geom",
+                "filterField": "doc_date",
+                "type": "date",
+                "placeholder": "Choisir une date"
+              },
+              "livraison": {
+                "layer": "tabou:tabou_v_oa_programme",
+                "geom": "the_geom",
+                "filterField": "livraison_date",
+                "type": "date",
+                "placeholder": "Choisir une date"
+              },
+              "pbil": {
+                "layer": "tabou2:v_pbil0",
+                "geom": "the_geom"
+              }
+            },
+            "apiCfg": {
+              "apiURL": "/tabou2",
+              "extApiURL": "/tabou2",
+              "authent": "gbruel:2v,vuO^BZ!~pBug#NoHC",
+              "documentsByPage": 5
+            }
+          }
+        },
           {
             "name": "Map",
             "cfg": {
@@ -470,7 +658,7 @@
                 "declineUrl" : "http://www.google.com"
                 }
             },
-            "OmniBar", "Login", "Save", "SaveAs", "BurgerMenu", "Expander", "Undo", "Redo", "FullScreen", "GlobeViewSwitcher", "SearchServicesConfig", "SearchByBookmark", "WidgetsBuilder", "Widgets",
+            "OmniBar", "Login", "Save", "SaveAs", "BurgerMenu", "Expander", "Undo", "Redo", "FullScreen", "SearchServicesConfig", "SearchByBookmark", "WidgetsBuilder", "Widgets",
             "WidgetsTray",
             "Timeline",
             "Playback",
