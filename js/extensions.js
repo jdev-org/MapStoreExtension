@@ -6,9 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Extension from './extension/plugins/Extension';
-import { name } from '../config';
-
+import Extension from "./extension/plugins/Extension";
+import { name } from "../config";
 
 export default {
     [name]: Extension
