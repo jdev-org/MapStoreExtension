@@ -3,11 +3,13 @@ import { UPDATE_MAP_LAYOUT, updateMapLayout } from '@mapstore/actions/maplayout'
 import { updateAdditionalLayer, removeAdditionalLayer } from '@mapstore/actions/additionallayers';
 import { hideMapinfoMarker, toggleMapInfoState } from '@mapstore/actions/mapInfo';
 import { isTabou2Activate } from '../selectors/tabou2';
-import { PANEL_SIZE, TABOU_VECTOR_ID, TABOU_OWNER, TABOU_MARKER_LAYER_ID } from '../constants';
+import { TABOU_VECTOR_ID, TABOU_OWNER, TABOU_MARKER_LAYER_ID } from '../constants';
 import { SETUP, CLOSE_TABOU, cleanTabouInfos } from "../actions/tabou2";
 import { get } from "lodash";
 import { defaultIconStyle } from "@mapstore/utils/SearchUtils";
 import iconUrl from "@mapstore/components/map/openlayers/img/marker-icon.png";
+
+const OFFSET = 550;
 /**
  * Manage mapstore toolbar layout
  * @param {any} action$
@@ -18,17 +20,18 @@ export const setTbarPosition = (action$, store) =>
     action$.ofType(UPDATE_MAP_LAYOUT)
         .filter(() => isTabou2Activate(store.getState()))
         .filter(({ source }) => {
+            console.log(source);
             return source !== 'tabou2';
         })
-        .map(({ layout }) => {
-            console.log(PANEL_SIZE);
+        .map(({layout}) => {
             const action = updateMapLayout({
-                layout,
-                right: layout?.boundingSidebarRect?.right ?? 0,
+                ...layout,
+                right: OFFSET + (layout?.boundingSidebarRect?.right ?? 0),
                 boundingMapRect: {
                     ...(layout.boundingMapRect || {}),
-                    right: PANEL_SIZE + (layout?.boundingSidebarRect?.right ?? 0)
-                }
+                    right: OFFSET + (layout?.boundingSidebarRect?.right ?? 0)
+                },
+                rightPanel: true
             });
             return { ...action, source: 'tabou2' }; // add an argument to avoid infinite loop.
         });
@@ -74,7 +77,7 @@ export const initMap = (action$, store) =>
             ]).concat([...(mapInfoEnabled ? [toggleMapInfoState(), hideMapinfoMarker()] : [])]);
         }).startWith({
             type: 'MAP_LAYOUT:UPDATE_DOCK_PANELS',
-            name: 'Tabou2',
+            name: 'tabou2',
             action: 'add',
             location: 'right'
         });

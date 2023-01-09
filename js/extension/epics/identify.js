@@ -1,39 +1,33 @@
 import * as Rx from "rxjs";
-import { CONTROL_NAME, ID_TABOU, URL_ADD } from "../constants";
+import { ID_TABOU, URL_ADD } from "../constants";
 
-import { get, keys, find, isEmpty, has, pickBy } from "lodash";
+import { get, keys, find, isEmpty, pickBy } from "lodash";
 
 import {
-    generalInfoFormatSelector,
     identifyOptionsSelector,
     clickPointSelector,
 } from "@mapstore/selectors/mapInfo";
 import { localizedLayerStylesEnvSelector } from "@mapstore/selectors/localizedLayerStyles";
-import { updateUserPlugin } from "@mapstore/actions/context";
 import { buildIdentifyRequest } from "@mapstore/utils/MapInfoUtils";
 import { layersSelector } from "@mapstore/selectors/layers";
 import { error, success } from "@mapstore/actions/notifications";
 import { getMessageById } from "@mapstore/utils/LocaleUtils";
 import { newfilterLayerByList, getNewCrossLayerFilter } from "../utils/search";
 import {
-    changeMapInfoFormat,
     updateFeatureInfoClickPoint,
 } from "@mapstore/actions/mapInfo";
 
 import { clickOnMap } from "@mapstore/actions/map";
 
-import { TOGGLE_CONTROL } from "@mapstore/actions/controls";
 import {
     isTabou2Activate,
-    defaultInfoFormat,
     getPluginCfg,
     getSelection,
     getLayerFilterObj,
-    getSelectionPoint,
+    getSelectionPoint
 } from "../selectors/tabou2";
 import {
     loadTabouFeatureInfo,
-    setDefaultInfoFormat,
     setMainActiveTab,
     PRINT_PDF_INFOS,
     CHANGE_FEATURE,

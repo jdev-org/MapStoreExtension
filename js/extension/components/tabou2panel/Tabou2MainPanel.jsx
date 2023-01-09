@@ -6,7 +6,7 @@ import DockPanel from '@mapstore/components/misc/panels/DockablePanel';
 import { toggleControl } from "@mapstore/actions/controls";
 import Tabou2MainTabs from './Tabou2MainTabs';
 import Tabou2MainToolContainer from './Tabou2MainToolContainer';
-import { CONTROL_NAME, PANEL_SIZE } from '../../constants';
+import { CONTROL_NAME } from '../../constants';
 import "@js/extension/css/tabou.css";
 import { updateVectorTabouStyle } from "../../actions/tabou2";
 import DockContainer from '@mapstore/components/misc/panels/DockContainer';
@@ -18,7 +18,6 @@ import ContainerDimensions from "react-container-dimensions";
  */
 function Tabou2MainPanel({
     enabled,
-    size = PANEL_SIZE,
     onClose = () => { },
     dockStyle,
     dockWidth,
@@ -41,7 +40,6 @@ function Tabou2MainPanel({
                     glyph="th"
                     bsStyle="primary"
                     title={<Message msgId="tabou2.windowTitle" />}
-                    draggable={false}
                     onClose={onClose}
                     dock
                     fade

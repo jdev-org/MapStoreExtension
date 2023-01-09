@@ -4,7 +4,7 @@ import { Glyphicon } from 'react-bootstrap';
 import { connect } from "react-redux";
 // NEW
 import { name } from '../../../config';
-import {createPlugin} from "@mapstore/utils/PluginsUtils";
+import { createPlugin } from "@mapstore/utils/PluginsUtils";
 
 import { toggleControl } from "@mapstore/actions/controls";
 import { changeLayerProperties, changeLayerParams } from "@mapstore/actions/layers";
@@ -34,8 +34,6 @@ import { onUpdateOperation, onGetInfos } from "../epics/vocations";
 import { setTbarPosition, initMap, closeTabouExt } from "../epics/setup";
 import "@js/extension/css/tabou.css";
 
-
-
 import { CONTROL_NAME, PANEL_SIZE } from '../constants';
 
 const compose = (...functions) => args => functions.reduceRight((arg, fn) => fn(arg), args);
@@ -58,6 +56,7 @@ class Tabou2Panel extends React.Component {
     };
 
     render() {
+        console.log("RENDER");
         return (
             <Tabou2MainPanel size={this.props.size} {...this.props} i18n={getMessageById} />
         );
@@ -66,7 +65,9 @@ class Tabou2Panel extends React.Component {
 
 const Tabou2Plugin = compose(
     connect((state) => ({
-        active: () => (state.controls && state.controls[CONTROL_NAME] && state.controls[CONTROL_NAME].enabled) || (state[CONTROL_NAME] && state[CONTROL_NAME].closing) || false,
+        active: () => {
+            return (state.controls && state.controls[CONTROL_NAME] && state.controls[CONTROL_NAME].enabled) || (state[CONTROL_NAME] && state[CONTROL_NAME].closing) || false;
+        },
         enabled: isTabou2Activate(state),
         tocLayers: layersSelector(state),
         selectedLayerId: selectedLayerIdSelector(state),

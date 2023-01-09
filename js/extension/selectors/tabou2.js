@@ -1,8 +1,16 @@
-import { CONTROL_NAME, TABOU_VECTOR_ID, TABOU_MARKER_LAYER_ID, URL_ADD } from '../constants';
-import { keys, pickBy, isEmpty, get, memoize } from 'lodash';
-import { userGroupSecuritySelector, userSelector } from '@mapstore/selectors/security';
-import { additionalLayersSelector } from '@mapstore/selectors/additionallayers';
-import {mapLayoutSelector} from "@mapstore/selectors/maplayout";
+import {
+    CONTROL_NAME,
+    TABOU_VECTOR_ID,
+    TABOU_MARKER_LAYER_ID,
+    URL_ADD,
+} from "../constants";
+import { keys, pickBy, isEmpty, get, memoize } from "lodash";
+import {
+    userGroupSecuritySelector,
+    userSelector,
+} from "@mapstore/selectors/security";
+import { additionalLayersSelector } from "@mapstore/selectors/additionallayers";
+import { mapLayoutSelector } from "@mapstore/selectors/maplayout";
 /**
  * Get active tab id
  * @param {*} state
@@ -17,7 +25,14 @@ export function currentActiveTabSelector(state) {
  * @returns {boolean}
  */
 export function isTabou2Activate(state) {
-    return (state.controls && state.controls[CONTROL_NAME] && state.controls[CONTROL_NAME].enabled) || (state[CONTROL_NAME] && state[CONTROL_NAME].closing) || false;
+    console.log(state);
+    return (
+        (state.controls &&
+            state.controls[CONTROL_NAME] &&
+            state.controls[CONTROL_NAME].enabled) ||
+        (state[CONTROL_NAME] && state[CONTROL_NAME].closing) ||
+        false
+    );
 }
 /**
  * Get current tabou filers
@@ -82,7 +97,7 @@ export function getPluginCfg(state) {
  */
 export function getLayersName(state) {
     let layerCfg = getPluginCfg(state).layersCfg;
-    return keys(layerCfg).map(k => layerCfg[k].nom);
+    return keys(layerCfg).map((k) => layerCfg[k].nom);
 }
 /**
  * Get selected feature from identify panel
@@ -110,7 +125,12 @@ export function getLayer(state) {
  * @returns {object} - layer info
  */
 export function getSelectedCfgLayer(state) {
-    return keys(pickBy(getPluginCfg(state).layersCfg, lyr => lyr.nom === getLayer(state)))[0];
+    return keys(
+        pickBy(
+            getPluginCfg(state).layersCfg,
+            (lyr) => lyr.nom === getLayer(state)
+        )
+    )[0];
 }
 /**
  * Get events for the selected tabou map feature
@@ -149,7 +169,7 @@ export function getAuthInfos(state) {
         isAdmin: groupNames.includes("MAPSTORE_ADMIN"),
         isReferent: groupNames.includes("EL_APPLIS_TABOU_REFERENT"),
         isContrib: groupNames.includes("EL_APPLIS_TABOU_CONTRIB"),
-        isConsult: groupNames.includes("EL_APPLIS_TABOU_CONSULT")
+        isConsult: groupNames.includes("EL_APPLIS_TABOU_CONSULT"),
     };
 }
 /**
@@ -230,12 +250,15 @@ export function getDefaultStyle(state) {
 
 export function getTabouVectorLayer(state) {
     const additionalLayers = additionalLayersSelector(state) ?? [];
-    return additionalLayers.filter(({ id }) => id === TABOU_VECTOR_ID)?.[0]?.options;
+    return additionalLayers.filter(({ id }) => id === TABOU_VECTOR_ID)?.[0]
+        ?.options;
 }
 
 export function getTabouMarkerLayer(state) {
     const additionalLayers = additionalLayersSelector(state) ?? [];
-    return additionalLayers.filter(({ id }) => id === TABOU_MARKER_LAYER_ID)?.[0]?.options;
+    return additionalLayers.filter(
+        ({ id }) => id === TABOU_MARKER_LAYER_ID
+    )?.[0]?.options;
 }
 
 export function getGfiData(state) {
@@ -257,7 +280,9 @@ export function getInfos(state) {
     // get plugin config
     const layersCfg = getPluginCfg(state).layersCfg;
     // layerOA, layerPa, layerSA
-    const configName = keys(layersCfg).filter(k => layer === layersCfg[k].nom)[0];
+    const configName = keys(layersCfg).filter(
+        (k) => layer === layersCfg[k].nom
+    )[0];
     // return correct name field id according to layer
     const featureId = get(feature, "properties.id_tabou");
     // find correct api name
@@ -266,7 +291,7 @@ export function getInfos(state) {
         featureId: featureId,
         layerUrl: layerUrl,
         layer: layer,
-        layerCfg: configName
+        layerCfg: configName,
     };
 }
 
@@ -278,7 +303,7 @@ export function getVocationsActivitesInfos(state) {
     return {
         typesContribution: state.tabou2.typesContribution,
         typesProgrammation: state.tabou2.typesProgrammation,
-        typesVocation: state.tabou2.typesVocation
+        typesVocation: state.tabou2.typesVocation,
     };
 }
 
@@ -286,11 +311,12 @@ export function getTypesFicheInfos(state) {
     return {
         typesFonciers: state.tabou2.typesFonciers,
         typesAction: state.tabou2.typesAction,
-        typesActeurs: state.tabou2.typesActeur
+        typesActeurs: state.tabou2.typesActeur,
     };
 }
 
-export const boundingSidebarRectSelector = (state) => state.maplayout && state.maplayout.boundingSidebarRect || {};
+export const boundingSidebarRectSelector = (state) =>
+    (state.maplayout && state.maplayout.boundingSidebarRect) || {};
 
 /**
  * Retrieve only specific attribute from map layout
@@ -301,18 +327,30 @@ export const boundingSidebarRectSelector = (state) => state.maplayout && state.m
  * @param  {boolean} isDock flag to use dock paddings instead of toolbar paddings
  * @return {object} selected attributes of layout of the map
  */
-export const mapLayoutValuesSelector = memoize((state, attributes = {}, isDock = false) => {
-    const layout = mapLayoutSelector(state);
-    const boundingSidebarRect = boundingSidebarRectSelector(state);
-    return layout && Object.keys(layout).filter(key =>
-        attributes[key]).reduce((a, key) => {
-        if (isDock) {
-            return ({...a, [key]: (boundingSidebarRect[key] ?? layout[key])});
-        }
-        return ({...a, [key]: layout[key]});
+export const mapLayoutValuesSelector = memoize(
+    (state, attributes = {}, isDock = false) => {
+        const layout = mapLayoutSelector(state);
+        const boundingSidebarRect = boundingSidebarRectSelector(state);
+        console.log(layout);
+        return (
+            (layout &&
+                Object.keys(layout)
+                    .filter((key) => attributes[key])
+                    .reduce((a, key) => {
+                        if (isDock) {
+                            return {
+                                ...a,
+                                [key]: boundingSidebarRect[key] ?? layout[key],
+                            };
+                        }
+                        return { ...a, [key]: layout[key] };
+                    }, {})) ||
+            {}
+        );
     },
-    {}) || {};
-}, (state, attributes, isDock) =>
-    JSON.stringify(mapLayoutSelector(state)) +
-    JSON.stringify(boundingSidebarRectSelector(state)) +
-    JSON.stringify(attributes) + (isDock ? '_isDock' : ''));
+    (state, attributes, isDock) =>
+        JSON.stringify(mapLayoutSelector(state)) +
+        JSON.stringify(boundingSidebarRectSelector(state)) +
+        JSON.stringify(attributes) +
+        (isDock ? "_isDock" : "")
+);

@@ -300,6 +300,7 @@
       "FeedbackMask"
     ],
     "desktop": [
+      "SidebarMenu",
       "Details",
       {
         "name": "Tabou2",
@@ -481,7 +482,7 @@
           "apiCfg": {
             "apiURL": "/tabou2",
             "extApiURL": "/tabou2",
-            "authent": "gbruel:2v,vuO^BZ!~pBug#NoHC",
+            "authent": "",
             "documentsByPage": 5
           }
         }
