@@ -14,32 +14,26 @@ import * as epics from '../epics/epics';
 import { setNewValue } from "../actions/actions";
 
 const CONTROL_NAME = "tabou2";
+
+const Tabou2Plugin = connect(state => ({
+    // selectors
+    value: state[CONTROL_NAME] && state[CONTROL_NAME].value,
+    active: state.controls && state.controls[CONTROL_NAME] && state.controls[CONTROL_NAME].enabled,
+    dockStyle: mapLayoutValuesSelector(state, { height: true, right: true }, true)
+}), {
+    // actions
+    onClose: toggleControl.bind(null, CONTROL_NAME, null),
+    onIncrease: setNewValue,
+    changeZoomLevel
+})(ExtensionComponent);
+
 export default createPlugin(name, {
-    component: connect(state => ({
-        // selectors
-        value: state[CONTROL_NAME] && state[CONTROL_NAME].value,
-        active: state.controls && state.controls[CONTROL_NAME] && state.controls[CONTROL_NAME].enabled,
-        dockStyle: mapLayoutValuesSelector(state, { height: true, right: true }, true)
-    }), {
-        // actions
-        onClose: toggleControl.bind(null, CONTROL_NAME, null),
-        onIncrease: setNewValue,
-        changeZoomLevel
-    })(ExtensionComponent),
+    component: Tabou2Plugin,
     reducers: {
         tabou2: tabou2
     },
     epics,
     containers: {
-        Toolbar: {
-            name: name,
-            position: 10,
-            text: "EXT",
-            doNotHide: true,
-            tooltip: "tabou2.btnTooltip",
-            action: toggleControl.bind(null, CONTROL_NAME, null),
-            priority: 1
-        },
         SidebarMenu: {
             name: name,
             position: 10,
