@@ -9,11 +9,11 @@ import ExtensionComponent from "../components/Component";
 
 import { changeZoomLevel } from "@mapstore/actions/map";
 import '../assets/style.css';
-import sampleExtension from "../reducers/reducers";
+import tabou2 from "../reducers/reducers";
 import * as epics from '../epics/epics';
 import { setNewValue } from "../actions/actions";
 
-const CONTROL_NAME = "sampleExtension";
+const CONTROL_NAME = "tabou2";
 export default createPlugin(name, {
     component: connect(state => ({
         // selectors
@@ -27,20 +27,17 @@ export default createPlugin(name, {
         changeZoomLevel
     })(ExtensionComponent),
     reducers: {
-        sampleExtension: sampleExtension
+        tabou2: tabou2
     },
     epics,
     containers: {
         Toolbar: {
             name: name,
             position: 10,
-            text: "INC",
+            text: "EXT",
             doNotHide: true,
-            action: () => {
-                return {
-                    type: 'INCREASE_COUNTER'
-                };
-            },
+            tooltip: "tabou2.btnTooltip",
+            action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 1
         },
         SidebarMenu: {

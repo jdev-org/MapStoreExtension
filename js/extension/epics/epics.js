@@ -21,7 +21,7 @@ import {
 import { enable } from '../selectors/selectors';
 
 import { SIZE } from "../constants/main";
-const CONTROL_NAME = "sampleExtension";
+const CONTROL_NAME = "tabou2";
 export const onOpenComponent = (action$, store) =>
     action$
         .ofType(TOGGLE_CONTROL)
@@ -79,7 +79,7 @@ export const updateTbarSearchBarPositions = (action$, store) =>
 export const logCounterValue = (action$, store) =>
     action$.ofType("INCREASE_COUNTER").switchMap(() => {
         /* eslint-disable */
-        console.log("CURRENT VALUE: " + store.getState().sampleExtension.value);
+        console.log("CURRENT VALUE: " + store.getState().tabou2.value);
         /* eslint-enable */
         return Rx.Observable.empty();
     });

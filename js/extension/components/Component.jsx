@@ -14,9 +14,9 @@ const Extension = ({
     return (
         <ResponsivePanel
             containerStyle={dockStyle}
-            containerId="sampleExtension-container"
+            containerId="tabou2-container"
             containerClassName="dock-container"
-            className="sampleExtension-dock-panel"
+            className="tabou2-dock-panel"
             open={active}
             position="right"
             size={SIZE}

@@ -6,7 +6,7 @@ const initialState = {
 };
 
 // reducer
-export default function sampleExtension (state = initialState, action) {
+export default function tabou2 (state = initialState, action) {
     switch (action.type) {
         case "INCREASE_COUNTER":
             return set("value", action.value, state);
