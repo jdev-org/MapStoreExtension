@@ -13,7 +13,7 @@ import {getMessageById} from "@mapstore/utils/LocaleUtils";
 
 
 import { isTabou2Activate, mapLayoutValuesSelector } from "../selectors/tabou2";
-import { setUp, closeTabou } from "../actions/tabou2";
+import { setUp, closeTabou, updateVectorTabouStyle } from "../actions/tabou2";
 import Tabou2MainPanel from "../components/tabou2Panel/Tabou2MainPanel";
 import tabou2 from "../reducers/tabou2";
 import init from "../utils/init";
@@ -74,7 +74,8 @@ const Tabou2Plugin = compose(
         changeLayerProperties: changeLayerProperties,
         onSyncLayers: syncLayers,
         onSelectLayers: selectLayers,
-        onQuery: search
+        onQuery: search,
+        updateVectorTabouStyle: updateVectorTabouStyle
     }),
     // setup and teardown due to open/close
     compose(
@@ -134,6 +135,15 @@ export default {
             action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 1,
             tooltip: "tabou2.btnTooltip"
+        },
+        SidebarMenu: {
+            name: "Tabou2",
+            position: 10,
+            icon: <Glyphicon glyph="th" />,
+            tooltip: "extension.tooltip",
+            doNotHide: true,
+            action: toggleControl.bind(null, CONTROL_NAME, null),
+            priority: 1
         }
     }
 };
