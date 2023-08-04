@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import { name } from '../../../config';
 import { toggleControl } from "@mapstore/actions/controls";
 import {createPlugin} from "@mapstore/utils/PluginsUtils";
-import ExtensionComponent from "../components/Component";
+import MainPanel from "../components/MainPanel/MainPanel";
 import { CONTROL_NAME } from "../constants";
 
-// import '../assets/style.css';
+import '../assets/style.css';
 
 import { getAuthLevel, isActive } from "../stateManagement/selector/selector";
 import reducers from "../stateManagement/reducers/reducers";
@@ -30,8 +30,7 @@ const component = compose(
         }),
         {
             // actions - mapDispatchToProps
-            onClose: toggleControl.bind(null, CONTROL_NAME, null),
-            ...actions,
+            onClose: close
         }
     ),
     compose(
@@ -42,17 +41,16 @@ const component = compose(
         }),
         init()
     )
-)(ExtensionComponent);
+)(MainPanel);
 
 
-import '../assets/style.css';
 
 export default createPlugin(name, {
     component: component,
     reducers: { docsManager: reducers },
     epics: {...epics},
     containers: {
-        Toolbar: {
+        SidebarMenu: {
             name: "docsManager",
             position: 10,
             icon: <Glyphicon glyph="list"/>,

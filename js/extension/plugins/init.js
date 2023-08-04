@@ -9,5 +9,6 @@ export default () =>
                 setup(props?.pluginCfg);
             }
         }, [props.active]);
+        console.log("init");
         return <Component {...props} />;
     };

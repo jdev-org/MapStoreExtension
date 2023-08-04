@@ -1,3 +1,5 @@
+import { set, compose } from "@mapstore/utils/ImmutableUtils";
+
 import {
     ADD_DOCUMENT,
     RESET_DOCSMANAGER_STATE,
