@@ -1,51 +1,73 @@
-import {connect} from "react-redux";
-import { name } from '../../../config';
+import React from "react";
+import { connect } from "react-redux";
+import { name } from "../../../config";
+import { Glyphicon } from "react-bootstrap";
 
-import {createPlugin} from "@mapstore/utils/PluginsUtils";
-import ExtensionComponent from "../components/Component";
-import Rx from "rxjs";
+import { createPlugin } from "@mapstore/utils/PluginsUtils";
+import { mapLayoutValuesSelector } from "@mapstore/selectors/maplayout";
+import { toggleControl } from "@mapstore/actions/controls";
+import pluginIcon from "../assets/trophy-line.svg";
+import MainPanel from "../components/Component";
+import "../assets/style.css";
+import sampleExtension from "../state/reducers/reducers";
 
-import { changeZoomLevel } from "@mapstore/actions/map";
-import '../assets/style.css';
+import * as epics from "../state/epics/register";
+import { setup } from "../state/actions/setup";
+import init from "../utils/init";
+
+import { CONTROL_NAME } from "../constants/main";
+
+const compose = (...functions) => {
+    return (args) => functions.reduceRight((arg, fn) => fn(arg), args);
+};
+
+const component = compose(
+    connect(
+        // selectors - mapStateToProps
+        (state) => ({
+            message: state[CONTROL_NAME].pluginCfg["message"],
+            // selectors
+            value: state[CONTROL_NAME] && state[CONTROL_NAME].value,
+            active:
+                state.controls &&
+                state.controls[CONTROL_NAME] &&
+                state.controls[CONTROL_NAME].enabled,
+            dockStyle: mapLayoutValuesSelector(
+                state,
+                { height: true, right: true },
+                true
+            ),
+            pluginIcon,
+        }),
+        {
+            // actions - mapDispatchToProps
+            onClose: toggleControl.bind(null, CONTROL_NAME, null),
+        }
+    ),
+    compose(
+        // on setup / close
+        connect(() => ({}), {
+            setup,
+        }),
+        init()
+    )
+)(MainPanel);
 
 export default createPlugin(name, {
-    component: connect(state => ({
-        value: state.sampleExtension && state.sampleExtension.value
-    }), {
-        onIncrease: () => {
-            return {
-                type: 'INCREASE_COUNTER'
-            };
-        }, changeZoomLevel
-    })(ExtensionComponent),
+    component: component,
     reducers: {
-        sampleExtension: (state = { value: 1 }, action) => {
-            if (action.type === 'INCREASE_COUNTER') {
-                return { value: state.value + 1 };
-            }
-            return state;
-        }
+        sampleExtension: sampleExtension,
     },
-    epics: {
-        logCounterValue: (action$, store) => action$.ofType('INCREASE_COUNTER').switchMap(() => {
-            /* eslint-disable */
-            console.log('CURRENT VALUE: ' + store.getState().sampleExtension.value);
-            /* eslint-enable */
-            return Rx.Observable.empty();
-        })
-    },
+    epics: { ...epics },
     containers: {
-        Toolbar: {
+        SidebarMenu: {
             name: "sampleExtension",
             position: 10,
-            text: "INC",
+            icon: <img src={pluginIcon} className="iconSize" />,
+            tooltip: "extension.tooltip",
             doNotHide: true,
-            action: () => {
-                return {
-                    type: 'INCREASE_COUNTER'
-                };
-            },
-            priority: 1
-        }
-    }
+            action: toggleControl.bind(null, CONTROL_NAME, null),
+            priority: 1,
+        },
+    },
 });

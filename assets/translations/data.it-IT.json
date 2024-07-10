@@ -2,7 +2,8 @@
     "locale": "it-IT",
     "messages": {
         "extension": {
-            "message": "Messaggio!"
+            "message": "Esempio di estensione!",
+            "tooltip": "Estensione aperta"
         }
     }
 }

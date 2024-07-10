@@ -2,7 +2,9 @@
     "locale": "en-US",
     "messages": {
         "extension": {
-            "message": "Message!"
+            "message": "Example of an extension!",
+            "tooltip": "Open sample extension",
+            "title": "Estensione personalizzata"
         }
     }
 }

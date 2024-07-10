@@ -1,0 +1,10 @@
+{
+    "locale": "en-US",
+    "messages": {
+        "extension": {
+            "message": "Exemple d'extension",
+            "tooltip": "Ouvrir l'extension exemple",
+            "title": "Extension personnalisée"
+        }
+    }
+}
