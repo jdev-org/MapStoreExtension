@@ -1,6 +1,7 @@
 import Rx from "rxjs";
 
 import { TOGGLE_CONTROL } from "@mapstore/actions/controls";
+import { CONTROL_NAME } from "../../constants/main";
 
 import {
     purgeMapInfoResults,
@@ -20,7 +21,7 @@ import {
 import { enable } from '../selectors/selectors';
 
 import { SIZE } from "../../constants/main";
-const CONTROL_NAME = "sampleExtension";
+
 export const onOpenComponent = (action$, store) =>
     action$
         .ofType(TOGGLE_CONTROL)

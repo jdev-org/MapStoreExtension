@@ -1,0 +1,9 @@
+.button-valid {
+    background-color: darkseagreen;
+    color: white;
+}
+
+.button-cancel {
+    background-color:orangered;
+    color: white;
+}

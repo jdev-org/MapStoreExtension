@@ -1,0 +1,24 @@
+#avisee-main-panel {
+    width: 100% !important;
+}
+.avisee-header-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(131, 130, 130, 0.255);
+}
+.avisee-header-bar .btn {
+    margin: 2px;
+}
+
+.btn-header {
+    background-color: var(--ms-primary, #078aa3);
+    color: white;
+}
+
+.avisee-btn-bar{
+    margin-top: 10px;
+}

@@ -1,15 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { name } from "../../../config";
-import { Glyphicon } from "react-bootstrap";
 
 import { createPlugin } from "@mapstore/utils/PluginsUtils";
 import { mapLayoutValuesSelector } from "@mapstore/selectors/maplayout";
 import { toggleControl } from "@mapstore/actions/controls";
-import pluginIcon from "../assets/trophy-line.svg";
-import MainPanel from "../components/Component";
+import pluginIcon from "../assets/plant_file.svg";
+import MainPanel from "../components/MainPanel/MainPanel";
 import "../assets/style.css";
-import sampleExtension from "../state/reducers/reducers";
+import avisee from "../state/reducers/reducers";
 
 import * as epics from "../state/epics/register";
 import { setup } from "../state/actions/setup";
@@ -56,12 +55,12 @@ const component = compose(
 export default createPlugin(name, {
     component: component,
     reducers: {
-        sampleExtension: sampleExtension,
+        avisee: avisee,
     },
     epics: { ...epics },
     containers: {
         SidebarMenu: {
-            name: "sampleExtension",
+            name: "avisee",
             position: 10,
             icon: <img src={pluginIcon} className="iconSize" />,
             tooltip: "extension.tooltip",

@@ -1,5 +1,5 @@
 {
-    "name": "MapStoreExtension",
+    "name": "mapstore-extension-avisee",
     "version": "1.0.0",
     "description": "Template project to create MapStore extensions",
     "main": "index.js",
